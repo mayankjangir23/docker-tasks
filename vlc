@@ -1,0 +1,40 @@
+play vedio inside docker
+
+xhost +local:docker  # Allow Docker access to display
+
+docker run -it --rm \
+  --env DISPLAY=$DISPLAY \
+  --volume /tmp/.X11-unix:/tmp/.X11-unix \
+  --device /dev/snd \
+  --volume /root/Downloads/dog_vedios.mp4:/video.mp4 \
+  --user $(id -u):$(id -g) \
+  jess/vlc /video.mp4
+
+xhost -local:docker  # Revoke access after use
+----------------------------------
+FROM ubuntu:22.04
+
+RUN apt update && apt install -y vlc sudo pulseaudio alsa-utils x11-apps
+
+RUN useradd -m dockeruser && \
+    echo "dockeruser ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
+
+USER dockeruser
+WORKDIR /home/dockeruser
+
+CMD ["vlc", "/video.mp4"]
+.....
+docker build -t vlc-safe .
+
+xhost +local:docker
+
+docker run -it --rm \
+  --env DISPLAY=$DISPLAY \
+  --volume /tmp/.X11-unix:/tmp/.X11-unix \
+  --device /dev/snd \
+  --volume /root/Downloads/dog_vedios.mp4:/video.mp4 \
+  vlc-safe
+
+xhost -local:docker
+
+
