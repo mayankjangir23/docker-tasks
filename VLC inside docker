@@ -1,0 +1,33 @@
+✅ run VLC media player inside docker
+
+steps-
+Step 1: Allow Docker to Access Your Display
+xhost +local:docker
+
+
+ Step 2: Run VLC Container
+docker run -it \
+  --env DISPLAY=$DISPLAY \
+ --env XAUTHORITY=$XAUTHORITY \
+  --volume /tmp/.X11-unix:/tmp/.X11-unix \
+  --device /dev/snd \
+  ubuntu bash
+
+step 3:install vlc inside container
+apt update
+apt list --upgradable
+ 
+apt install -y pulseaudio alsa-utils dbus-x11 👌
+or
+apt install -y apt-utils software-properties-common
+or
+apt install -y vlc --install-recommends
+
+apt install -y vlc libgl1 libasound2 fonts-dejavu   #fonts-dejavu is important for  missing fonts cause GUI to fail silently.
+
+
+Step 3: Play a video
+vlc
+
+step 4
+vlc /video/your-movie.mp4
