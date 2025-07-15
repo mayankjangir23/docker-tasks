@@ -1,0 +1,35 @@
+✅ name- how to run GUI apps in docker
+
+steps-
+1.install docker
+sudo apt update
+sudo apt install docker.io
+sudo systemctl start docker
+sudo systemctl enable docker
+
+2.Allow docker to use your display
+xhost +local:docker
+
+3.Create a Docker Container With GUI Support
+docker run -it \
+    --env DISPLAY=$DISPLAY \  #Shares your screen info with the container
+    --env XAUTHORITY=$XAUTHORITY \ #Shares your permissions to open GUI apps
+    --volume /tmp/.X11-unix:/tmp/.X11-unix \ #Gives access to the part of your system that handles windows.
+    ubuntu bash #use ubunutu image and start a sheel inside container
+
+
+4.inside container install GUI tools
+apt update 
+apt list --upgradable
+
+5.GUI APPS
+apt install -y x11-apps-include basix xtools
+others..
+apt install -y firefox-web browser
+apt install -y nautilus-file browser
+apt install -y gedit-gnome text editor
+apt install -y vlc -vedio player
+
+6.run a GUI app
+xeyes
+
