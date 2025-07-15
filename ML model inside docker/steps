@@ -1,0 +1,18 @@
+steps-
+
+1.clone your git in vm using your github personal token
+git clone https://github.com/YOUR_USERNAME/inventory-demand-forecast.git
+
+2.clone and build project
+cd ~
+git clone git@github.com:YOUR_USERNAME/inventory-demand-forecast.git
+cd inventory-demand-forecast
+
+3.build image
+docker build -t inventory-forecast .
+
+4.run container
+docker run inventory-forecast 210
+
+5.predicted output is shown
+
