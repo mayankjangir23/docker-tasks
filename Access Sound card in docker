@@ -1,0 +1,37 @@
+✅ access sound card in docker
+
+#Advance Lnux Sound Archircture is core linux sound systemthat talks to sound card hardware
+it includes kernel drivers,user tools(alsa-utils like apaly,amixer),configuration files(/etc/asound.conf)
+#alsa-utils = provide user tools like aplay,mixer etc for playing/testing sounds
+#alsa-base= config and init scripts for sound kernel modules
+#linux-sound base= meta package for base sound libraries
+#aplay play .wav files and amixer -control volume/mixer
+
+steps
+1.systemctl start docker
+2.xhost +local:docker
+
+3.RUN CONTAINER WITH SOUND-CARD
+use ALSA directly (for simpler CLI audio like aplay)
+
+docker run -it \
+  --rm \
+  --device /dev/snd \  #pass host sound into container
+  -v /etc/asound.conf:/etc/asound.conf \ #share host alsa config with container
+  ubuntu bash
+
+4.inside docker,install alsa-utils
+-apt update && apt install -y alsa-utils 
+-aplay /usr/share/sounds/alsa/Front_Center.wav #play default sound
+
+no such file error
+
+5.install sample audio files
+-apt install -y alsa-utils alsa-base linux-sound-base
+
+6.check file
+-ls /usr/share/sounds/alsa/
+
+7.PLAY IT
+-aplay /usr/share/sounds/alsa/Front_Center.wav
+
