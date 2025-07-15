@@ -1,0 +1,31 @@
+✅run jenkins inside docker
+
+steps-
+1. docker network create jenkins
+2.docker run -d \
+  --name jenkins \
+  --restart=unless-stopped \
+  -p 8080:8080 -p 50000:50000 \
+  -v jenkins_home:/var/jenkins_home \
+  --network jenkins \
+  jenkins/jenkins:lts
+
+3. docker start jenkins
+4.docker ps 
+
+5.check whats using the port 8080
+sudo lsof -i :8080
+
+6.docker start jenkins
+
+7.to resolve conflict 
+docker rm jenkin
+
+docker run -d \
+  --name jenkins \
+  -p 9090:8080 -p 50001:50000 \
+  -v jenkins_home:/var/jenkins_home \
+  jenkins/jenkins:lts
+
+
+docker exec -it jenkins cat /var/jenkins_home/secrets/initialAdminPassword
