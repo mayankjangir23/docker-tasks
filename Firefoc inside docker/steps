@@ -1,0 +1,25 @@
+✅ how to install and run firefox inside docker
+
+steps-
+
+1..Build Docker Image from dockerfile
+
+2.build the image
+docker build -t firefox-image .
+
+
+3.linux host with X11
+docker run -it \
+    --rm \
+    -e DISPLAY=$DISPLAY \
+    -v /tmp/.X11-unix:/tmp/.X11-unix \
+    --device /dev/snd \
+    --name firefox-runner \
+    firefox-image
+
+4.revoke X11 access
+xhost -local:root
+
+    
+
+
